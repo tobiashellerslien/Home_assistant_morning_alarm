@@ -1,0 +1,8 @@
+{% set now_time = now().time() %}
+{% set alarm_time = states('sensor.konverter_fra_input_time_og_minutt_til_hh_mm')[:5] %}
+{% set today = now().date() %}
+{% if now_time > strptime(alarm_time, '%H:%M').time() %}
+  {{ (now() + timedelta(days=1)).date() }}
+{% else %}
+  {{ today }}
+{% endif %}
