@@ -1,0 +1,1 @@
+{{ as_timestamp(states('sensor.alarm_dato_automatisk') + 'T' + states('sensor.konverter_fra_input_time_og_minutt_til_hh_mm')) | timestamp_custom('%Y-%m-%dT%H:%M:%S%z', false) }}

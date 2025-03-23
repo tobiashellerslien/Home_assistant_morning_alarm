@@ -1,0 +1,3 @@
+{% set hour = states('input_number.alarm_time_input') | int %}
+{% set minute = states('input_number.alarm_minutt_input') | int %}
+{{ '{:02d}:{:02d}'.format(hour, minute) }}

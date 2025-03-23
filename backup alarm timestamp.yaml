@@ -1,0 +1,17 @@
+{% set alarm_time_str = states('sensor.konverter_fra_input_time_og_minutt_til_hh_mm') %}
+          {% set alarm_time = strptime(alarm_time_str, '%H:%M').time() %}
+          {% set backup_alarm_offset = states('input_number.tid_til_backup_alarm') | int %}
+          {% set now = now() %}
+          {% set today = now.date() %}
+
+          {# Beregn tidspunktet for backup-alarmen som timestamp basert på dagens dato #}
+          {% set base_alarm_datetime = strptime(today|string + ' ' + alarm_time_str, '%Y-%m-%d %H:%M') %}
+          {% set backup_alarm_timestamp = as_timestamp(base_alarm_datetime) + backup_alarm_offset * 60 %}
+
+          {# Sammenlign backup-alarmtidspunktet med nåværende tidspunkt for å bestemme riktig dato #}
+          {% if backup_alarm_timestamp < as_timestamp(now) %}
+            {% set backup_alarm_timestamp = backup_alarm_timestamp + 86400 %}
+          {% endif %}
+
+          {# Konverter backup-alarmtimestamp til ISO-format #}
+          {{ backup_alarm_timestamp | timestamp_custom('%Y-%m-%dT%H:%M:%S%z', false) }}
