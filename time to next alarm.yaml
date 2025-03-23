@@ -1,0 +1,1 @@
+The alarm goes off in {{ ((as_timestamp(states('sensor.timestamp_alarm')) - as_timestamp(states('sensor.date_time_iso'))) // 3600) | int }} hours and {{ (((as_timestamp(states('sensor.timestamp_alarm')) - as_timestamp(states('sensor.date_time_iso'))) % 3600) // 60) | int }} minutes.
