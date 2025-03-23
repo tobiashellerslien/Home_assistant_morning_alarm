@@ -1,0 +1,8 @@
+action: media_player.play_media
+target:
+  entity_id: media_player.tobias_google_nest
+data:
+  media_content_id: >
+    {{ "media-source://media_source/local/" ~ states('input_select.alarm_sang')
+    }}
+  media_content_type: audio/mpeg
